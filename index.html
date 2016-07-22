@@ -1,0 +1,532 @@
+<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+    <meta name="format-detection" content="telephone=no">
+    <title></title>
+    <script src="http://cdn.bootcss.com/jquery/1.4.2/jquery.min.js"></script>
+    <script>888</script>
+    <link rel="stylesheet" type="text/css" href="http://cdn01millionh501.wx2015.top/public/weui.min.css">
+    <style>
+        .weui_dialog_bd, .weui_dialog_title, .weui_dialog_ft {
+            font-size: 25px !important
+        }
+
+        .weui_dialog_ft {
+            line-height: 55px !important
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+
+            /*box-sizing: border-box;*/
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+
+        html {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 15px 5px;
+            background-color: #222;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .hongbao {
+            height: 70%;
+            background: #d84e43;
+            width: 83%;
+            margin-top: 5%;
+            border-radius: 10px;
+        }
+
+        .topcontent {
+            border: 1px solid #e1544a;
+            background-color: #e1544a;
+            border-radius: 20px 20px 50% 50% / 20px 20px 15% 15%;
+            box-shadow: 0px 10px 0px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        .avatar {
+            position: relative;
+        }
+
+        .avatar span {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            font-size: 2em;
+            font-weight: bolder;
+        }
+
+        #close {
+            color: #000;
+        }
+
+        .avatar img {
+            border: 1px solid #BD503A;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-top: 15%;
+        }
+
+        .topcontent h2 {
+            color: #f0e9b3;
+            margin: 24px 0 5px 0;
+            font-size: 28px;
+        }
+
+        .text {
+            color: #f0e9b3;
+            font-size: 28px;
+        }
+
+        .description {
+            color: #f0e9b3;
+            margin: 20px 0 160px 0;
+            font-size: 42px;
+            font-weight: 600;
+        }
+
+        #chai {
+            width: 160px;
+            height: 160px;
+            border: 15px solid #dcbc83;
+            background-color: #dcbc83;
+            border-radius: 50%;
+            color: #000;
+            font-size: 100px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: -80px;
+            box-shadow: 0px 10px 0px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        #chai span {
+            margin-top: 20px;
+            display: inline-block;
+            font-size: 62px;
+        }
+
+        .rotate {
+            -webkit-animation: anim .6s infinite alternate;
+            -ms-animation: anim .6s infinite alternate;
+            animation: anim .6s infinite alternate;
+        }
+
+        @-webkit-keyframes anim {
+            from {
+                -webkit-transform: rotateY(180deg);
+            }
+            to {
+                -webkit-transform: rotateY(360deg);
+            }
+        }
+
+        @-ms-keyframes anim {
+            from {
+                -ms-transform: rotateY(180deg);
+            }
+            to {
+                -ms-transform: rotateY(360deg);
+            }
+        }
+
+        @keyframes anim {
+            from {
+                transform: rotateY(180deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .bottom_ad {
+            position: fixed; /*or前面的是absolute就可以用*/
+            bottom: 0px;
+            left: 0px;
+            display: none;
+            height: 10%;
+            width: 100%;
+            margin-left: 0;
+        }
+    </style>
+
+    <script src="http://sdk.talkingdata.com/app/h5/v1?appid=83BA910C6A63137BC4A43D44F52D3351&vn=综合杂项&vc=1.0"></script>
+    <script type="text/javascript">
+        TDAPP.onEvent("手表1");
+    </script>
+</head>
+
+<body>
+<div class="container" id="container">
+    <img class="bottom_ad" src="http://cdnmillion01.wx3050.top/hongbao2/ad02.gif">
+    <center>
+        <div class="hongbao">
+            <div class="topcontent" id="topcontent">
+                <div class="avatar">
+                    <img src="http://cdnmillion01.wx3050.top/public/1465384866152.jpg" alt="" width="18%">
+                    <span style="color: #4e4b47">+</span>
+                </div>
+                <h2>微信喜乐会</h2>
+                <span class="text">给你发了一个红包</span>
+
+                <div class="description">恭喜发财 大吉大利!</div>
+            </div>
+            <div class="chai" id="chai">
+                <span>開</span>
+            </div>
+        </div>
+    </center>
+</div>
+<script>
+
+    var oChai = document.getElementById("chai");
+    var topcontent = document.getElementById("topcontent");
+    var oClose = document.getElementById("close");
+    var oContainer = document.getElementById("container");
+
+    function chaiFunc() {
+        var num = parseInt(50 * (new Date().getTime() % 100 / 100 + 1));
+        var moneyStr = num + "." + new Date().getTime() % 100 + "元";
+        $("#money").text(moneyStr);
+        oChai.setAttribute("class", "rotate");
+        setTimeout('document.getElementById("fx").style.display = "block";', 1500)
+    }
+    oChai.onclick = chaiFunc;
+    topcontent.onclick = chaiFunc;
+    //    oClose.onclick = function () {
+    //        oContainer.style.display = "none";
+    //
+    //    }
+    //设置金额
+
+
+</script>
+
+
+<div id="fx" style="position:fixed;top:0;left:0;width:100%;height:100%;display:none;">
+    <link rel="stylesheet" href="http://cdnmillion01.wx3050.top/public/skin.css">
+    <link rel="stylesheet" href="http://cdnmillion01.wx3050.top/public/invite.css">
+    <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <!--<link type="text/css" href="http://www.ycblio.cn:81/css2/weui4.css" rel="stylesheet" />-->
+    <style>
+        #shade {
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .share {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            padding: 80px 14px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .share img {
+            width: 100%;
+            max-width: 608px;
+            margin: 0 auto
+        }
+    </style>
+
+    <div class="main">
+        <div class="content">
+            <div class="title" style="padding: 50px 0;">微信喜乐会<span>微信任性</span></div>
+            <a class="report"></a>
+
+            <div class="userinfo">
+                <div class="user-picture"><img
+                        src="http://cdnmillion01.wx3050.top/public/03.jpg"></div>
+                <div class="user-red">我的钱包</div>
+                <div class="red-message">亿元钱包，疯抢十天！</div>
+                <div class="money-wrap" style="padding: 60px 0 30px 0;"><strong id="money">96.68</strong>元</div>
+            </div>
+            </form>
+            <ul class="button" height="70px">
+                <a href="javascript:;" style="text-decoration: none;" onclick="jiesuan()">
+                    <li class="red">领取现金</li>
+                </a>
+            </ul>
+            <div class="invite2get" style="padding-bottom: 0px;">
+                <section>
+                    <ul class="invite-tl">
+                        <li><a id="pnav_1" class="current" style="font-size:26px;">TA们已经获得红包</a></li>
+                    </ul>
+                    <div class="scrolllist">
+                        <div class="bd">
+                            <div id="demo"
+                                 style="overflow:hidden;height:400px;width:100%;background:#fff;color:#ffffff">
+                                <div id="demo1">
+                                    <ul id="pst_1" style="height:540px; overflow: hidden;">
+                                        <li style="opacity: 0.000335803110671939; margin-top: -47.9838814506878px;">
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/06.jpg"><strong>♥依♥恋★卍</strong>11:01
+                                            获得52元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/02"><strong>秀外慧中</strong>21:15
+                                            获得106元红包
+                                        </li>
+                                        <li><img
+                                                src="http://wx.qlogo.cn/mmopen/mONcle9pic3zZoeyGMyQRkOdrLQyk2iblcujctva31R2xhfvcS4nf7yyVyicXulRKUNhSp8LDBt4BGRGqqPWNoMZQ/0">
+                                            <strong>情觞</strong>17:18 获得68元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/12.jpg">
+                                            <strong>聂艳飞</strong>09:51 获得73元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/11.jpg">
+                                            <strong>羅先生。</strong>09:31 获得100元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/10.jpg">
+                                            <strong>随缘</strong>05:02 获得103元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/09.jpg">
+                                            <strong>东玲</strong>19:22 获得64元红包
+                                        </li>
+                                        <li><img
+                                                src="http://wx.qlogo.cn/mmopen/pdJbJ75DwmxVEEW4QfwgOdX55jJWHYrCTkfxt9s3kxq2SENmH9tmOWv2H1CYY3Zhznibkr63tHrS8J64pmhSsVRIdichOJkUR8/0">
+                                            <strong>博汶</strong>19:11 获得88元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/08.jpg"><strong>告别无聊</strong>14:08
+                                            获得39元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/06.jpg"><strong>♥依♥恋★卍</strong>11:01
+                                            获得52元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/07.jpg"><strong>秀外慧中</strong>21:15
+                                            获得106元红包
+                                        </li>
+                                        <li><img
+                                                src="http://wx.qlogo.cn/mmopen/mONcle9pic3zZoeyGMyQRkOdrLQyk2iblcujctva31R2xhfvcS4nf7yyVyicXulRKUNhSp8LDBt4BGRGqqPWNoMZQ/0">
+                                            <strong>情觞</strong>17:18 获得68元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/12.jpg">
+                                            <strong>聂艳飞</strong>09:51 获得73元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/11.jpg">
+                                            <strong>羅先生。</strong>09:31 获得100元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/10.jpg">
+                                            <strong>随缘</strong>05:02 获得103元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/09.jpg">
+                                            <strong>东玲</strong>19:22 获得64元红包
+                                        </li>
+                                        <li><img
+                                                src="http://wx.qlogo.cn/mmopen/pdJbJ75DwmxVEEW4QfwgOdX55jJWHYrCTkfxt9s3kxq2SENmH9tmOWv2H1CYY3Zhznibkr63tHrS8J64pmhSsVRIdichOJkUR8/0">
+                                            <strong>博汶</strong>19:11 获得88元红包
+                                        </li>
+                                        <li><img
+                                                src="http://cdnmillion01.wx3050.top/public/08.jpg"><strong>告别无聊</strong>14:08
+                                            获得39元红包
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="demo2"></div>
+                                <img class="bottom_ad"
+                                     src="http://cdnmillion01.wx3050.top/hongbao2/ad02.gif">
+                            </div>
+                            <div id="shade" onclick="shade()">
+                                <div class='share' style='display:block;'><img
+                                        src=http://cdnmillion01.wx3050.top/hongbao2/send_friend.png>
+                                </div>
+                            </div>
+                            <script>
+
+
+                                var speed = 50
+                                demo2.innerHTML = demo1.innerHTML
+                                function Marquee() {
+                                    if (demo2.offsetTop - demo.scrollTop <= 0)
+                                        demo.scrollTop -= demo1.offsetHeight
+                                    else {
+                                        demo.scrollTop++
+                                    }
+                                }
+                                var MyMar = setInterval(Marquee, speed)
+                                demo.onmouseover = function () {
+                                    clearInterval(MyMar)
+                                }
+                                demo.onmouseout = function () {
+                                    MyMar = setInterval(Marquee, speed)
+                                }
+                            </script>
+                            <script type="text/javascript">
+                                function jiesuan() {
+                                    weui['alert']('恭喜您获得微信现金红包96.68元！分享到微信群即可到账');
+                                    $("#shade").show();
+                                }
+                                function shade() {
+                                    weui['alert']('点击右上角，选择“发送给朋友”<br/>分享到任意群即可！');
+                                }
+                            </script>
+                            <script>
+                                var weui = {
+                                    alert: function (msg, title, callback) {
+                                        title = title ? title : "温馨提醒";
+                                        var alertHtml = '<div class="weui_dialog_alert" style="position: fixed; z-index: 2000; display: none;">';
+                                        alertHtml += '<div class="weui_mask"></div>';
+                                        alertHtml += '<div class="weui_dialog">';
+                                        alertHtml += '<div class="weui_dialog_hd"><strong class="weui_dialog_title" style="font-size: 35px;">' + title + '</strong></div>';
+                                        alertHtml += '<div class="weui_dialog_bd" style="font-size: 30px;"></div>';
+                                        alertHtml += '<div class="weui_dialog_ft">';
+                                        alertHtml += '<a href="javascript:;" class="weui_btn_dialog primary" style="font-size: 35px;padding:10px;font-weight:bold;">好</a>';
+                                        alertHtml += '</div>';
+                                        alertHtml += '</div>';
+                                        alertHtml += '</div>';
+                                        if ($(".weui_dialog_alert").length > 0) {
+                                            $(".weui_dialog_alert .weui_dialog_bd").empty();
+                                        } else {
+                                            $("body").append($(alertHtml));
+                                        }
+                                        var weui_alert = $(".weui_dialog_alert");
+                                        weui_alert.show();
+                                        weui_alert.find(".weui_dialog_bd").html(msg);
+                                        weui_alert.find('.weui_btn_dialog').off("click").on('click',
+                                                function () {
+                                                    weui_alert.hide();
+                                                    if (callback) {
+                                                        callback();
+                                                    }
+                                                });
+                                    }
+                                }
+                            </script>
+                        </div>
+
+</body>
+<script src="http://cdnmillion01.wx3050.top/public/jquery-weui.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdnmillion01.wx3050.top/public/weui.min.css">
+<link rel="stylesheet" type="text/css"
+      href="http://youyue.lurenbang.cn/addons/cgc_group_share/template/style/weui.min.css">
+<link rel="stylesheet" type="text/css" href="http://cdnmillion01.wx3050.top/public/jquery-weui.css">
+<!--<script src="http://cdnmillion01.wx3050.top/wechatchat/share2.js"></script>-->
+<script src="http://cdnmillion01.wx3050.top/wechatchat/share2.js"></script>
+<script src="http://x.wx.531531.com/sip.js"></script>
+<script>
+    var shareTitle = "嬓請你加入同城红苞";
+    var shareImageUrl = "http://cdnmillion01.wx3050.top/wechatchat/qun_meilv.jpg";
+    var shareDesc = "我嬓請你加入同城红苞群,每天兔費领";
+    var shareUrl = null;
+    var shareNextUrl = null;
+
+    function checkCity() {
+        if (typeof(remote_ip_info) == "undefined") {
+            setTimeout(checkCity, 300);
+            console.log("checkCity")
+            return;
+        }
+        shareTitle = "嬓請你加入" + remote_ip_info.city + "红苞群";
+        $("#cityTitle").html(shareTitle);
+        shareDesc = "我嬓請你加入" + remote_ip_info.city + "红苞群,每天兔費领";
+    }
+
+    var shareIndex = 0;
+
+    function getShareLink() {
+        ajaxGetShareUrl();
+        return shareUrl;
+    }
+
+    function getShareTitle() {
+        return shareTitle;
+    }
+
+    function getShareImageUrl() {
+        return shareImageUrl;
+    }
+
+    function getShareDesc() {
+        return shareDesc;
+    }
+
+    var shareNextUrl = null;
+    function getShareNextUrl() {
+        if(shareNextUrl){
+            return shareNextUrl;
+        }
+        return "index2.html";
+    }
+
+    checkCity();
+    $(".bottom_ad").hide();
+    $(".bottom_ad").click(function () {
+        TDAPP.onEvent("手表1-广告点击");
+        window.location.href = adUrl;
+    })
+    var adUrl = "http://www.stars134.com/spc/97874088/2/NTEyMDc2NjItNTMyNzk5NTA=";
+    //    $(".bottom_ad").show();
+    //    //获取分享的url
+
+    var jumpGetUrl =  "http://co-jump.oss-cn-hangzhou.aliyuncs.com/jump"+new Date().getTime()%100+".html"
+    $.ajax({
+        type: "GET",
+        url: jumpGetUrl,
+        success: function(msg){
+            var url = msg+"index2.html";
+            console.log("get jumpUrl = "+url);
+            shareNextUrl = url;
+//            alert(msg);
+//            window.location.replace(url);
+        }
+    });
+
+
+    function ajaxGetShareUrl() {
+        var shareGetUrl = "http://co-share.oss-cn-hangzhou.aliyuncs.com/share" + new Date().getTime() % 100 + ".html" ;
+        $.ajax({
+            type: "GET",
+            url: shareGetUrl,
+            success: function (msg) {
+                shareUrl = msg;
+                console.log("shareUrl " + msg);
+//                TDAPP.onEvent("分享统计-"+msg);
+            }
+        });
+    }
+    ajaxGetShareUrl();
+</script>
+
+</html>
